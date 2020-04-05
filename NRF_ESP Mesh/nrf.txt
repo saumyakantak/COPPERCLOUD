@@ -1,0 +1,29 @@
+THESE ARE SOME OF THE IMPORTANT INFORMATION THAT WE GATHERED
+
+https://forum.arduino.cc/index.php?topic=421081 
+
+If you are using pins other than 10 and 9 for CSN and CE you must still set pin 10 for OUTPUT to ensure that the Uno acts as the SPI master. (for arduino uno)(in case given code doesnot work).
+
+Like a lot of other equipment (WiFi and Bluetooth, for example) the nRF24L01+ modules broadcast on the 2.4GHz band. The precise frequency is determined by the channel that is selected. Both TX and RX must use the same channel. The default channel for the RF24 library is 76.
+
+The nRF24L01+ modules can listen on any or all of 6 "pipes". Unfortunately in some RF24 demo programs the variable that is used to hold the address is given the name "pipe" even though pipes and addresses are quite different. For the purpose of this tutorial I will only be using one pipe (pipe 1) for listening. Note that pipe 0 is the only writing pipe. It is possible to listen on pipe 0 but it is simpler to leave that excusively for writing.
+
+Note that if 2 or more TXs transmit at the same time on the same channel they will interfere with each other and the message will not be receivable. That is why an NRF24 cannot receive messages on its 6 pipes at the same instant.
+
+Messages will also be garbled if (say) a nearby Wifi system transmits at the same time on the exact same frequency.
+
+Two-way transmission using the ackPayload concept
+The complications of swapping roles can be completely avoided by using the ackPayload concept. The idea is that the slave puts data in the ackPayload buffer BEFORE it receives a message from the master and then the data in the ackPayload buffer is sent automatically as part of the normal acknowledgment process without your code needing to make the devices swap roles. 
+
+
+https://electropeak.com/learn/wireless-communication-w-arduino-and-nrf24l01/
+
+https://forum.arduino.cc/index.php?topic=507046.0
+
+
+https://drive.google.com/drive/folders/0ByhPnI_rdTCyeV9HbFRMZG45MW8
+
+connect a 10uF capacitor across GND and VCC of NRF24
+to enable sleep mode in RF24Network library => goto its config.h file in library and uncomment the #define ENABLE_SLEEP_MODE
+
+To know which channel is free for communication use SCANNER example in arduino IDE for RF24.......then transfer the data  to excel and plot a graph to view which channels are free.
